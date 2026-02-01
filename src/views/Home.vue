@@ -32,7 +32,7 @@
           :key="product.id"
           :title="product.title"
           :price="product.price"
-          :image="product.image"
+          :images="product.images"
           @view-details="openModal(product)"
         />
       </div>
@@ -89,7 +89,11 @@ const loadDummyData = () => {
       id: i + 1,
       title: `Soap Flower Bouquet #${i + 1}`,
       price: `RM ${50 + (i * 10)}`,
-      image: dummyImages[i % dummyImages.length],
+    images: [
+        dummyImages[i % dummyImages.length],
+        dummyImages[(i + 1) % dummyImages.length],
+        dummyImages[(i + 2) % dummyImages.length]
+      ],
       description: `Experience the elegance of our handcrafted Soap Flower Bouquet #${i + 1}. \n\nEach petal is meticulously sculpted from high-quality soap, offering a realistic look and a gentle, soothing fragrance. Perfect for gifting, home decor, or a special treat for yourself.\n\nType: Handcrafted Soap Flower\nFragrance: Gentle Floral\nDurability: Long-lasting (Avoid water and direct sunlight)`
     }))
     loading.value = false

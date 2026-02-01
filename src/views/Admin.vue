@@ -30,12 +30,14 @@
         
         <form @submit.prevent="handleUpload" class="space-y-6">
           <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:bg-gray-50 transition cursor-pointer relative">
-            <input type="file" @change="onFileSelected" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*">
-            <div v-if="!previewUrl">
+            <input type="file" @change="onFileSelected" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*" multiple>
+            <div v-if="previewUrls.length === 0">
               <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
-              <p class="text-gray-500">Click to upload image</p>
+              <p class="text-gray-500">Click to upload images</p>
             </div>
-            <img v-else :src="previewUrl" class="max-h-48 mx-auto rounded-lg shadow-sm" />
+            <div v-else class="grid grid-cols-3 gap-2">
+              <img v-for="(url, index) in previewUrls" :key="index" :src="url" class="h-24 w-full object-cover rounded-lg shadow-sm" />
+            </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -74,7 +76,7 @@ const password = ref('')
 const productTitle = ref('')
 const productPrice = ref('')
 const productDescription = ref('')
-const previewUrl = ref(null)
+const previewUrls = ref([])
 const uploading = ref(false)
 
 const handleLogin = () => {
@@ -91,9 +93,9 @@ const logout = () => {
 }
 
 const onFileSelected = (event) => {
-  const file = event.target.files[0]
-  if (file) {
-    previewUrl.value = URL.createObjectURL(file)
+  const files = event.target.files
+  if (files && files.length > 0) {
+    previewUrls.value = Array.from(files).map(file => URL.createObjectURL(file))
   }
 }
 
@@ -106,7 +108,7 @@ const handleUpload = () => {
     productTitle.value = ''
     productPrice.value = ''
     productDescription.value = ''
-    previewUrl.value = null
+    previewUrls.value = []
   }, 1500)
 }
 </script>
