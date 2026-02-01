@@ -7,7 +7,7 @@
     <div class="p-5">
       <h3 class="text-lg font-bold text-gray-800 mb-2 truncate">{{ title }}</h3>
       <p class="text-primary font-semibold">{{ price }}</p>
-      <button class="w-full mt-4 bg-primary text-white py-2 rounded-lg hover:bg-purple-dark transition active:scale-95 text-sm font-medium">
+      <button @click="$emit('view-details')" class="w-full mt-4 bg-primary text-white py-2 rounded-lg hover:bg-purple-dark transition active:scale-95 text-sm font-medium">
         View Details
       </button>
     </div>
