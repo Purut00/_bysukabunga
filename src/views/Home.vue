@@ -33,6 +33,7 @@
           :title="product.title"
           :price="product.price"
           :image="product.image"
+          @view-details="openModal(product)"
         />
       </div>
     </section>
@@ -40,6 +41,12 @@
     <!-- Contact Section (Integrated into Footer but can be separate if needed) -->
     
     <Footer />
+
+    <ProductModal 
+      :isOpen="isModalOpen" 
+      :product="selectedProduct || {}" 
+      @close="closeModal" 
+    />
   </div>
 </template>
 
@@ -48,9 +55,24 @@ import { ref, onMounted } from 'vue'
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 import ProductCard from '../components/ProductCard.vue'
+import ProductModal from '../components/ProductModal.vue'
 
 const products = ref([])
 const loading = ref(true)
+const selectedProduct = ref(null)
+const isModalOpen = ref(false)
+
+const openModal = (product) => {
+  selectedProduct.value = product
+  isModalOpen.value = true
+}
+
+const closeModal = () => {
+  isModalOpen.value = false
+  setTimeout(() => {
+    selectedProduct.value = null
+  }, 300) // Clear after animation
+}
 
 // Dummy Data Generator
 const loadDummyData = () => {
@@ -67,7 +89,8 @@ const loadDummyData = () => {
       id: i + 1,
       title: `Soap Flower Bouquet #${i + 1}`,
       price: `RM ${50 + (i * 10)}`,
-      image: dummyImages[i % dummyImages.length]
+      image: dummyImages[i % dummyImages.length],
+      description: `Experience the elegance of our handcrafted Soap Flower Bouquet #${i + 1}. \n\nEach petal is meticulously sculpted from high-quality soap, offering a realistic look and a gentle, soothing fragrance. Perfect for gifting, home decor, or a special treat for yourself.\n\nType: Handcrafted Soap Flower\nFragrance: Gentle Floral\nDurability: Long-lasting (Avoid water and direct sunlight)`
     }))
     loading.value = false
   }, 800)

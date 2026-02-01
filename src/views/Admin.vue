@@ -49,6 +49,11 @@
             </div>
           </div>
 
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Product Description</label>
+            <textarea v-model="productDescription" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 p-2 border" placeholder="Describe the product..." required></textarea>
+          </div>
+
           <button type="submit" :disabled="uploading" class="w-full bg-primary text-white py-2 rounded-lg hover:bg-purple-dark transition disabled:opacity-50 flex justify-center items-center">
             <div v-if="uploading" class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
             {{ uploading ? 'Uploading...' : 'Publish Product' }}
@@ -68,6 +73,7 @@ const email = ref('')
 const password = ref('')
 const productTitle = ref('')
 const productPrice = ref('')
+const productDescription = ref('')
 const previewUrl = ref(null)
 const uploading = ref(false)
 
@@ -99,6 +105,7 @@ const handleUpload = () => {
     uploading.value = false
     productTitle.value = ''
     productPrice.value = ''
+    productDescription.value = ''
     previewUrl.value = null
   }, 1500)
 }
